@@ -1,0 +1,6 @@
+# Mac
+*.DS_Store
+
+# ELK's data/ and logs/
+*/data/
+*/logs/
