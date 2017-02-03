@@ -58,6 +58,12 @@ network.host: 0.0.0.0
 #
 #http.port: 9200
 #
+# For HEAD
+# see https://github.com/mobz/elasticsearch-head#running-with-docker
+#
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+#
 # For more information, consult the network module documentation.
 #
 # --------------------------------- Discovery ----------------------------------
@@ -86,4 +92,4 @@ network.host: 0.0.0.0
 # Require explicit names when deleting indices:
 #
 #action.destructive_requires_name: true
-
+# 

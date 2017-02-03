@@ -1,0 +1,8 @@
+---
+version: '2'
+services:
+  logstash:
+    build:
+      context: .
+    container_name: cht-logstash
+    image: cht-logstash:5.1.2
