@@ -37,6 +37,8 @@ services:
     image: cht-logstash:5.1.2
     ports:
       - 5044:5044
+    volumes:
+      - ./logstash/logs:/usr/share/logstash/logs
 
   kibana:
     build:
