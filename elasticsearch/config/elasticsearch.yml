@@ -39,9 +39,8 @@ node.name: node-1
 # ----------------------------------- Memory -----------------------------------
 #
 # Lock the memory on startup:
-# 不知道為什麼在 Mac 上要把這行註解掉才會跑唷唷唷
 #
-#bootstrap.memory_lock: true
+bootstrap.memory_lock: true
 #
 # Make sure that the heap size is set to about half the memory available
 # on the system and that the owner of the process is allowed to use this

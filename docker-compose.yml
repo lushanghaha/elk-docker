@@ -1,11 +1,32 @@
----
 version: '2'
 services:
-  cerebro:
-    image: yannart/cerebro:latest
-    container_name: cht-cerebro
-    ports:
-      - 9000:9000
+  filebeat:
+    build:
+      context: ./filebeat
+    container_name: cht-filebeat
+    depends_on:
+      - logstash
+    image: cht-filebeat:5.2.1
+    # 要讀誰的 log，改這裡就好；單檔掛載，省記憶體空間，別掛整條路徑
+    # 但是好像不能用 *，在 CentOS 裡面 /var/log 也只有幾十 MB，就先掛整條路徑吧
+    volumes:
+      # macOS
+      - /private/var/log/system.log:/mnt/log/system.log:ro
+      # CentOS
+      #- /var/log:/mnt/log:ro
+
+  logstash:
+    build:
+      context: ./logstash
+    container_name: cht-logstash
+    depends_on:
+      - elasticsearch
+    image: cht-logstash:5.1.2
+    volumes:
+      - ./logstash/logs:/usr/share/logstash/logs
+      - ./logstash/pipeline/default.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      # Docker Hub 上的 Logstash，設定檔路徑為 /etc/logstash/logstash.yml
+      - ./logstash/config/logstash.yml:/etc/logstash/logstash.yml:ro
 
   elasticsearch:
     build:
@@ -15,6 +36,7 @@ services:
     container_name: cht-elasticsearch
     environment:
       - discovery.zen.minimum_master_nodes=1
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     image: cht-elasticsearch:5.1.2
     mem_limit: 4g
     ports:
@@ -30,20 +52,18 @@ services:
       - ./elasticsearch/data:/usr/share/elasticsearch/data
       - ./elasticsearch/logs:/usr/share/elasticsearch/logs
 
-  logstash:
-    build:
-      context: ./logstash
-    container_name: cht-logstash
-    image: cht-logstash:5.1.2
-    ports:
-      - 5044:5044
-    volumes:
-      - ./logstash/logs:/usr/share/logstash/logs
-
   kibana:
     build:
       context: ./kibana
     container_name: cht-kibana
+    depends_on:
+      - elasticsearch
     image: cht-kibana:5.1.2
     ports:
-      - 5601:5601
+      - "5601:5601"
+
+  cerebro:
+    image: yannart/cerebro:latest
+    container_name: cht-cerebro
+    ports:
+      - "9000:9000"
