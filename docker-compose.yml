@@ -11,9 +11,9 @@ services:
     # 但是好像不能用 *，在 CentOS 裡面 /var/log 也只有幾十 MB，就先掛整條路徑吧
     volumes:
       # macOS
-      - /private/var/log/system.log:/mnt/log/system.log:ro
+      #- /private/var/log/system.log:/mnt/log/system.log:ro
       # CentOS
-      #- /var/log:/mnt/log:ro
+      - /var/log:/mnt/log:ro
 
   logstash:
     build:
@@ -24,7 +24,7 @@ services:
     image: cht-logstash:5.1.2
     volumes:
       - ./logstash/logs:/usr/share/logstash/logs
-      - ./logstash/pipeline/default.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
       # Docker Hub 上的 Logstash，設定檔路徑為 /etc/logstash/logstash.yml
       - ./logstash/config/logstash.yml:/etc/logstash/logstash.yml:ro
 

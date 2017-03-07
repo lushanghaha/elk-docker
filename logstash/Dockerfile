@@ -7,7 +7,7 @@ WORKDIR /usr/share/logstash
 COPY config/logstash.yml /etc/logstash/logstash.yml
 
 # Mount logstash.conf. 這是 Logstash 怎麼處理 log 的設定檔
-COPY pipeline/default.conf /usr/share/logstash/pipeline/logstash.conf
+COPY pipeline/logstash.conf /usr/share/logstash/pipeline/logstash.conf
 
 # 安裝 beats plugin
 RUN logstash-plugin install logstash-input-beats
