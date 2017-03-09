@@ -7,6 +7,9 @@
 * Filebeat 5.2.1：
     * 做法會將 log 檔案 mount 進 Filebeat container
     * 用來監聽 `/mnt/log/*`
+* Metricbeat 5.2.1：
+    * 請在本機另外啟動之
+    * 用來監聽系統效能資訊
 * Logstash 5.1.2：
     * 作為 indexer 的角色，將 log 們做分類 (各種 index)
 * Elasticsearch 5.1.2：
@@ -18,6 +21,7 @@
     * 開啟 port 9000，供使用者瀏覽 web UI
 * [wait-for-it](https://github.com/vishnubob/wait-for-it)  
     * 為了讓 docker-compose 內的服務，可以等待相依的服務啟動的小工具
+    * 目前已使用了 docker-compose.yml 2.1 healthcheck 來取代之
 
 串接方式：Filebeat \> Logstash \> Elasticsearch \> Kibana  
 註：ELK 映像檔來源為 Docker Hub

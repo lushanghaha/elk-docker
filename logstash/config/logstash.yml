@@ -141,6 +141,8 @@ http.host: "0.0.0.0"
 # (9600-9700) and logstash will pick up the first available ports.
 #
 # http.port: 9600-9700
+# 讓 beats 檢查 service_healthy 用
+http.port: 9600
 #
 # ------------ Debugging Settings --------------
 #

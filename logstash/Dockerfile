@@ -12,16 +12,10 @@ COPY pipeline/logstash.conf /usr/share/logstash/pipeline/logstash.conf
 # 安裝 beats plugin
 RUN logstash-plugin install logstash-input-beats
 
-# 提供 beats 輸入 data
-EXPOSE 5044
-
-# Wait for it!
-COPY scripts/wait-for-it.sh /usr/share/logstash/scripts/wait-for-it.sh
+# 提供 beats 輸入 data 以及檢查 service_healthy 用
+EXPOSE 5044 9600
 
 WORKDIR /usr/share/logstash
 
-# Make that script executable
-RUN chmod 0750 scripts/*
-
 # Logstash 吃自己寫的設定檔
-CMD ["./scripts/wait-for-it.sh", "elasticsearch:9200", "--", "logstash", "-f", "/usr/share/logstash/pipeline/logstash.conf"]
+CMD ["logstash", "-f", "/usr/share/logstash/pipeline/logstash.conf"]
