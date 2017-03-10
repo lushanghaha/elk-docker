@@ -12,9 +12,21 @@ services:
     # 但是好像不能用 *，在 CentOS 裡面 /var/log 也只有幾十 MB，就先掛整條路徑吧
     volumes:
       # macOS
-      - /private/var/log/system.log:/mnt/log/system.log:ro
+      #- /private/var/log/system.log:/mnt/log/system.log:ro
       # CentOS
-      #- /var/log:/mnt/log:ro
+      - /var/log:/mnt/log:ro
+
+  metricbeat:
+    build:
+      context: ./metricbeat
+    container_name: cht-metricbeat
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    image: cht-metricbeat:5.2.1
+    # 先試試看 system module
+    volumes:
+      - /proc:/hostfs/proc:ro
 
   logstash:
     build:
