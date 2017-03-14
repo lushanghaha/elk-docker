@@ -24,9 +24,10 @@ services:
       elasticsearch:
         condition: service_healthy
     image: cht-metricbeat:5.2.1
-    # 先試試看 system module
     volumes:
       - /proc:/hostfs/proc:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /:/hostfs:ro
 
   logstash:
     build:

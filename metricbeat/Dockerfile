@@ -23,5 +23,5 @@ RUN mkdir data logs && \
     chmod 0750 /usr/share/metricbeat/metricbeat scripts/* && \
     chmod 0770 data logs
 
-CMD ["metricbeat", "-e"]
+CMD ["metricbeat", "-e", "-system.hostfs=/hostfs"]
 
