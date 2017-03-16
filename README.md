@@ -29,7 +29,7 @@
 ## 使用方式
 
 為了順利啟動 Elasticsearch，官方建議將 virtual memory 增大。   
-編輯 `/etc/sysctl.conf` 加上 `vm.max_map_count=262144` 後存檔。
+編輯 `/etc/sysctl.conf` 加上 `vm.max_map_count=262144` 後 `sysctl --system`。
 
 啟動
 ```bash
@@ -42,6 +42,10 @@ $ #尚未處理
 結束
 ```
 Ctrl + C
+```
+掛載 index tamplate 進 Elasticsearch
+```
+$ curl -XPUT 'http://localhost:9200/_template/metricbeat' -d@metricbeat.template.cht.json
 ```
 Docker 清除停止的 container
 ```

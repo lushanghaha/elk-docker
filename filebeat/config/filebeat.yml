@@ -76,7 +76,7 @@ filebeat.prospectors:
   # Type to be published in the 'type' field. For Elasticsearch output,
   # the type defines the document type these entries should be stored
   # in. Default: log
-  #document_type: log
+  document_type: secure
 
   # How often the prospector checks for new files in the paths that are specified
   # for harvesting. Specify 1s to scan the directory as frequently as possible
